@@ -7,7 +7,7 @@ const dailyExpenseShema = new mongoose.Schema({
         required: true
     },
     date:{
-        type: Date,
+        type: String,
         required: true
     },
     amount:[
@@ -19,9 +19,20 @@ const dailyExpenseShema = new mongoose.Schema({
             amount: {
                 type: Number,
                 required: true
+            },
+            time:{
+                type: String,
+                required: true
             }
         }
-    ]
+    ],
+    totalAmount: {
+        type: Number,
+        required: true,
+        default: 0
+    }
 });
 
-export const DailyExpense = mongoose.model('DailyExpense', dailyExpenseShema);
+const DailyExpense = mongoose.model('DailyExpense', dailyExpenseShema);
+
+export default DailyExpense;

@@ -6,7 +6,7 @@ const monthlyIncomeSchema = new mongoose.Schema({
         required: true,
     },
     month: {
-        type: String,
+        type: Number,
         required: true,
     },
     year: {

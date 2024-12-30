@@ -14,13 +14,17 @@ const yearlyExpenseSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    monthlyEexpens: [
+    monthlyExpens: [
         {
             month:{
                 type: Number,
                 required: true,
             },
             totalAmountSpent: {
+                type: Number,
+                required: true,
+            },
+            monthlyIncome: {
                 type: Number,
                 required: true,
             }
