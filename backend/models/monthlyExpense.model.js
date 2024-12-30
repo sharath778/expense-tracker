@@ -6,7 +6,7 @@ const monthlyExpenseSchema = new mongoose.Schema({
         ref: "User"
     },
     month:{
-        type: String,
+        type: Number,
         required: true
     },
     year:{
@@ -19,14 +19,18 @@ const monthlyExpenseSchema = new mongoose.Schema({
     },
     expenses:[{
         date:{
-            type: Date,
+            type: String,
             required: true
         },
         dayTotal:{
             type: Number,
             required: true
         }
-    }]
+    }],
+    monthlyTotal:{
+        type: Number,
+        required: true
+    }
 });
 
 export const MonthlyExpense = mongoose.model("MonthlyExpense", monthlyExpenseSchema);
