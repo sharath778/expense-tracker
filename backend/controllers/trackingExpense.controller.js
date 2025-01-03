@@ -17,7 +17,9 @@ export const addDailyEspense = async (req, res) => {
             return res.status(404).json({ msg: `No monthly income found-> Add ${month} income` });
         }
 
-        const { amount, expenseType} = req.body;
+        var { amount} = req.body;
+        const{ expenseType} = req.body;
+        amount=Number(amount);
         if(!amount||!expenseType){
             return res.status(400).json({ msg: 'Please provide amount and expenseType' });
         }
@@ -37,7 +39,8 @@ export const addDailyEspense = async (req, res) => {
         }else{
             dailyExpense.amount.push({ expenseType, amount, time});
         }
-        dailyExpense.totalAmount=dailyExpense.totalAmount+amount;        await dailyExpense.save();
+        dailyExpense.totalAmount=dailyExpense.totalAmount+amount;        
+        await dailyExpense.save();
         monthlyIncome.remainingAmount=monthlyIncome.remainingAmount-amount;
         await monthlyIncome.save();
         res.json(dailyExpense);               
@@ -54,7 +57,8 @@ export const allDailyEspense = async (req, res)=>{
         if(!userId){
             return res.status(401).json({ msg: 'Not authorized' });
         }
-        const {date} = req.body;
+        var {date} = req.body;
+        console.log(date);
         if(!date){
             const currentDate = new Date();
             date =currentDate.getDate()+"-"+currentDate.getMonth()+"-"+currentDate.getFullYear();
@@ -79,8 +83,9 @@ export const updateDailyEspense =async (req, res)=>{
             return res.status(401).json({ msg: 'Not authorized' });
         }
         const {index, expenseType, amount} =req.body;
-        if(!index|| (!expenseType&&!amount)){
-            return res.status(400).json({ msg: 'Please provide (index) and date' });
+        // console.log(index, expenseType, amount);
+        if(!index && (!expenseType&&!amount)){
+            return res.status(400).json({ msg: 'Please provide index and any of(amount/expenseType)' });
         }
         const currDate = new Date();
         const date = currDate.getDate()+"-"+currDate.getMonth()+"-"+currDate.getFullYear();
@@ -118,8 +123,9 @@ export const deleteDailyEspense =async (req, res)=>{
         if (!userId) {
             return res.status(401).json({ msg: 'Not authorized' });
         }
-        const {index}   = req.body;
-        if(!index){
+        const {index}   = req.query;
+        
+        if (index === undefined || index === null || isNaN(index)){
             return res.status(400).json({ msg: 'Please provide index' });
         }
         const currDate = new Date();
@@ -211,8 +217,10 @@ export const getMonthlyExpense = async (req, res)=>{
         if(!userId){
             return res.status(401).json({ msg: 'Not authorized' });
         }
-        const {month, year}=req.body;
-        if(!month||!year){
+        
+        const {month, year} = req.body;
+
+        if(month===undefined || isNaN(month) || month===null || year===null || year===undefined || isNaN(year)) {
             return res.status(400).json({ msg: 'Please provide month and year' });
         }
 
@@ -316,12 +324,15 @@ export const getYearlyExpense = async (req, res)=>{
             if(!monthlyExpense){
                 return res.status(404).json({ msg: `No yearly expense found for ${year}` });
             }
+        
             monthlyExpense = monthlyExpense.sort((a,b)=>a.month-b.month);
+            
             let monthlyData=[];
             let yearlyTotal = 0;
             let j=0;
             for(let i=0;i<12;i++){
-                if (j <=i && i===monthlyExpense[i].month){
+                if (j <=i && j<monthlyExpense.length && i===monthlyExpense[i].month){
+                    
                     var month = {
                         month:i,
                         totalAmountSpent:monthlyExpense[i].monthlyTotal,
@@ -355,7 +366,7 @@ export const getYearlyExpense = async (req, res)=>{
             let yearlyTotal = 0;
             let j = 0;
             for (let i = 0; i < 12; i++) {
-                if (j<=i && i === monthlyExpense[j].month) {
+                if (j <= i && j < monthlyExpense.length && i === monthlyExpense[j].month) {
                     var month = {
                         month: i,
                         totalAmountSpent: monthlyExpense[j].monthlyTotal,
