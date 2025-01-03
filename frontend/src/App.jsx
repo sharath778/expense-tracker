@@ -10,16 +10,18 @@ import DailyTrackPage from './pages/DailyTrackPage.jsx';
 import MonthlyTrackPage from './pages/MonthlyTrackPage.jsx';
 import YearlyTrackPage from './pages/YearlyTrackPage.jsx';
 import MonthlyIncomeForm from './components/MonthlyIncomeForm.jsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [user,setuser] = useState(null);
-  const ur = localStorage.getItem('user');
-  if (ur) {
-    setuser(JSON.parse(ur));
-  } else {
-    setuser(null);
-  }
+  useEffect(() =>{
+    const ur = localStorage.getItem('user');
+    if(ur){
+      setuser(JSON.parse(ur));
+    } else {
+      setuser(null);
+    }
+  },[LoginPage, SignupPage,Dashboard]);
   
 
   return (
