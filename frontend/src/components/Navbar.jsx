@@ -38,6 +38,7 @@ const Navbar = () => {
             console.log(res)
             if(res.request.status === 200){
                 localStorage.removeItem('user');
+                localStorage.removeItem('daytotal');
                 toast.success("logout was successful!");
                 navigate("/");
             }
