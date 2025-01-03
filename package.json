@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "nodemon ./backend/index.js",
-    "start": "node ./backend/index.js"
+    "start": "node ./backend/index.js",
+    "build":"npm install && cd ./frontend && npm install && npm run build"
   },
   "type": "module",
   "dependencies": {
@@ -11,7 +12,6 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.2",
-    "nodemon": "^3.1.9",
-    "react-datepicker": "^7.5.0"
+    "nodemon": "^3.1.9"
   }
 }

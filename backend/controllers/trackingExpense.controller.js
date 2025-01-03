@@ -58,7 +58,7 @@ export const allDailyEspense = async (req, res)=>{
             return res.status(401).json({ msg: 'Not authorized' });
         }
         var {date} = req.body;
-        console.log(date);
+        
         if(!date){
             const currentDate = new Date();
             date =currentDate.getDate()+"-"+currentDate.getMonth()+"-"+currentDate.getFullYear();
