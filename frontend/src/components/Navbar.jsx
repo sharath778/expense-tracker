@@ -53,7 +53,7 @@ const Navbar = () => {
             {/* Navbar */}
             <nav className="flex justify-between items-center bg-blue-600 text-white p-4 w-[100vw] fixed z-50">
                 <div className="text-xl">{userName}</div>
-                <div className="text-lg font-bold">App Name</div>
+                <div className="text-lg font-bold">Expense-Tracker</div>
                 <button className="bg-red-500 px-4 py-2 rounded-full hover:bg-red-600" onClick={handleLogout}>Logout</button>
             </nav>
 
